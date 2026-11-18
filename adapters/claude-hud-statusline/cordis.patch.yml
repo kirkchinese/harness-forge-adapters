@@ -1,0 +1,3 @@
+- insert:
+    - id: claude-hud-statusline
+      name: '@kirkchinese/dsh-adapter-claude-hud-statusline'

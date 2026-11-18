@@ -1,0 +1,18 @@
+{
+  "name": "harness-forge-adapters",
+  "private": true,
+  "description": "DSH adapters for Claude Code, Codex and OpenCode plugin parts, written in Harness Forge's porting studio",
+  "license": "MIT",
+  "type": "module",
+  "engines": {
+    "node": ">=22.18"
+  },
+  "scripts": {
+    "index": "node scripts/build-index.mjs",
+    "check-index": "node scripts/build-index.mjs --check",
+    "test": "node --test \"adapters/*/test/*.test.{js,mjs}\""
+  },
+  "devDependencies": {
+    "@deepseek-ai/dsh-plugin-market-index": "0.2.1-rc.2"
+  }
+}

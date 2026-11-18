@@ -1,0 +1,66 @@
+{
+  "format": 1,
+  "title": {
+    "en": "Harness Forge adapters",
+    "zh": "Harness Forge 适配器"
+  },
+  "description": {
+    "en": "Claude Code, Codex and OpenCode plugin parts brought to DSH by its porting studio.",
+    "zh": "由移植工作室带进 DSH 的 Claude Code、Codex、OpenCode 插件部件。"
+  },
+  "metadata": {
+    "categories": {
+      "adapter": {
+        "title": {
+          "en": "Adapters",
+          "zh": "适配器"
+        }
+      }
+    },
+    "labels": {
+      "claude-code": {
+        "title": "Claude Code"
+      }
+    }
+  },
+  "plugins": [
+    {
+      "name": "@kirkchinese/dsh-adapter-claude-hud-statusline",
+      "title": "claude-hud status line for DSH",
+      "description": "claude-hud (Claude Code) for DSH. Ported in Harness Forge's porting studio.",
+      "author": "kirkchinese",
+      "homepage": "https://github.com/kirkchinese/harness-forge-adapters/tree/main/adapters/claude-hud-statusline",
+      "repository": {
+        "url": "https://github.com/kirkchinese/harness-forge-adapters",
+        "directory": "adapters/claude-hud-statusline"
+      },
+      "metadata": {
+        "category": "adapter",
+        "keywords": [
+          "dsh-plugin",
+          "claude-hud",
+          "statusline",
+          "harness-forge-adapter"
+        ],
+        "labels": [
+          "claude-code"
+        ]
+      },
+      "versions": [
+        {
+          "version": "0.1.0",
+          "publishTimestamp": 1794976045,
+          "source": {
+            "type": "git",
+            "url": "https://github.com/kirkchinese/harness-forge-adapters",
+            "commit": "74339ca097c91855dedf6556116eb876607301b6",
+            "path": "adapters/claude-hud-statusline"
+          },
+          "engines": {
+            "dsh": ">=0.2.1-rc.2 <0.3.0"
+          }
+        }
+      ]
+    }
+  ]
+}

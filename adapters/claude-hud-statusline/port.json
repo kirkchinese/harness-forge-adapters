@@ -1,0 +1,240 @@
+{
+  "name": "claude-hud-statusline",
+  "packageName": "@kirkchinese/dsh-adapter-claude-hud-statusline",
+  "template": "ui-slot",
+  "createdAt": "2026-11-18T00:08:28.703Z",
+  "gap": {
+    "id": "claude-code:claude-hud:ui:statusline:ui",
+    "plugin": {
+      "id": "claude-code:claude-hud",
+      "name": "claude-hud",
+      "source": "claude-code",
+      "root": "https://github.com/jarrodwatts/claude-hud.git#dd8c0bebeeef81f94a9361af317492f626d3890d"
+    },
+    "component": {
+      "id": "claude-code:claude-hud:ui:statusline",
+      "kind": "ui",
+      "name": "statusline",
+      "path": "install.mjs",
+      "surface": "statusline"
+    },
+    "kind": "ui-surface",
+    "summary": "UI surface \"statusline\" has no direct DSH equivalent",
+    "detail": "It can be shown as a diagnostic or rewritten as a DSH slot adapter; not rendered as the original UI.",
+    "template": "ui-slot"
+  },
+  "source": {
+    "root": "https://github.com/jarrodwatts/claude-hud.git#dd8c0bebeeef81f94a9361af317492f626d3890d",
+    "repository": "https://github.com/jarrodwatts/claude-hud.git",
+    "commit": "dd8c0bebeeef81f94a9361af317492f626d3890d",
+    "version": "0.15.1",
+    "license": "MIT"
+  },
+  "run": {
+    "provider": "deepseek-official",
+    "model": "deepseek-flash",
+    "promptVersion": "ddddbacd6255",
+    "inputHash": "37caa8089df1fcad"
+  },
+  "checks": [
+    {
+      "at": "2026-11-18T00:10:38.461Z",
+      "ok": false,
+      "failed": [
+        "finished"
+      ]
+    },
+    {
+      "at": "2026-11-18T00:10:49.914Z",
+      "ok": true,
+      "failed": []
+    },
+    {
+      "at": "2026-11-18T00:12:04.075Z",
+      "ok": true,
+      "failed": []
+    },
+    {
+      "at": "2026-11-18T00:13:38.775Z",
+      "ok": true,
+      "failed": []
+    },
+    {
+      "at": "2026-11-18T00:14:36.985Z",
+      "ok": true,
+      "failed": []
+    },
+    {
+      "at": "2026-11-18T00:15:17.203Z",
+      "ok": true,
+      "failed": []
+    },
+    {
+      "at": "2026-11-18T00:15:38.236Z",
+      "ok": true,
+      "failed": []
+    },
+    {
+      "at": "2026-11-18T02:17:11.088Z",
+      "ok": true,
+      "failed": []
+    },
+    {
+      "at": "2026-11-18T02:17:32.139Z",
+      "ok": true,
+      "failed": []
+    },
+    {
+      "at": "2026-11-18T02:18:27.083Z",
+      "ok": true,
+      "failed": []
+    },
+    {
+      "at": "2026-11-18T02:49:42.994Z",
+      "ok": true,
+      "failed": []
+    },
+    {
+      "at": "2026-11-18T03:04:37.216Z",
+      "ok": true,
+      "failed": []
+    },
+    {
+      "at": "2026-11-18T03:27:33.661Z",
+      "ok": true,
+      "failed": []
+    },
+    {
+      "at": "2026-11-18T04:12:16.729Z",
+      "ok": true,
+      "failed": []
+    },
+    {
+      "at": "2026-11-18T04:14:52.562Z",
+      "ok": true,
+      "failed": []
+    },
+    {
+      "at": "2026-11-18T04:17:36.144Z",
+      "ok": true,
+      "failed": []
+    },
+    {
+      "at": "2026-11-18T04:19:02.587Z",
+      "ok": true,
+      "failed": []
+    },
+    {
+      "at": "2026-11-18T04:19:53.738Z",
+      "ok": true,
+      "failed": []
+    },
+    {
+      "at": "2026-11-18T04:22:18.015Z",
+      "ok": true,
+      "failed": []
+    },
+    {
+      "at": "2026-11-18T04:26:16.371Z",
+      "ok": true,
+      "failed": []
+    },
+    {
+      "at": "2026-11-18T04:49:02.715Z",
+      "ok": true,
+      "failed": []
+    }
+  ],
+  "trials": [
+    {
+      "at": "2026-11-18T00:11:01.369Z",
+      "ok": true,
+      "summary": "installed; session exit 0; 9 adapter tool(s) offered; 0 scripted call(s), 0 failed; a render was written"
+    },
+    {
+      "at": "2026-11-18T00:12:13.694Z",
+      "ok": true,
+      "summary": "installed; session exit 0; 9 adapter tool(s) offered; 0 scripted call(s), 0 failed; a render was written"
+    },
+    {
+      "at": "2026-11-18T00:12:45.904Z",
+      "ok": true,
+      "summary": "installed; session exit 0; 9 adapter tool(s) offered; 0 scripted call(s), 0 failed; a render was written"
+    },
+    {
+      "at": "2026-11-18T00:13:56.419Z",
+      "ok": true,
+      "summary": "installed; session exit 0; 9 adapter tool(s) offered; 0 scripted call(s), 0 failed; a render was written"
+    },
+    {
+      "at": "2026-11-18T00:14:59.432Z",
+      "ok": true,
+      "summary": "installed; session exit 0; 9 adapter tool(s) offered; 1 scripted call(s), 0 failed; a render was written"
+    },
+    {
+      "at": "2026-11-18T00:15:57.352Z",
+      "ok": true,
+      "summary": "installed; session exit 0; 9 adapter tool(s) offered; 1 scripted call(s), 0 failed; a render was written"
+    },
+    {
+      "at": "2026-11-18T02:17:27.043Z",
+      "ok": true,
+      "summary": "installed; session exit 0; 0 adapter tool(s) offered; 1 scripted call(s), 0 failed; no render written"
+    },
+    {
+      "at": "2026-11-18T02:17:54.486Z",
+      "ok": true,
+      "summary": "installed; session exit 0; 0 adapter tool(s) offered; 1 scripted call(s), 0 failed; a render was written"
+    },
+    {
+      "at": "2026-11-18T02:18:49.480Z",
+      "ok": true,
+      "summary": "installed; session exit 0; 0 adapter tool(s) offered; 1 scripted call(s), 0 failed; a render was written"
+    },
+    {
+      "at": "2026-11-18T02:51:30.185Z",
+      "ok": true,
+      "summary": "installed; session exit 0; 0 adapter tool(s) offered; 0 scripted call(s), 0 failed; a render was written"
+    },
+    {
+      "at": "2026-11-18T03:05:03.304Z",
+      "ok": true,
+      "summary": "installed; session exit 0; 0 adapter tool(s) offered; 0 scripted call(s), 0 failed; a render was written"
+    },
+    {
+      "at": "2026-11-18T04:15:30.716Z",
+      "ok": true,
+      "summary": "installed; session exit 0; 0 adapter tool(s) offered; 0 scripted call(s), 0 failed; a render was written"
+    },
+    {
+      "at": "2026-11-18T04:18:02.824Z",
+      "ok": true,
+      "summary": "installed; session exit 0; 0 adapter tool(s) offered; 1 scripted call(s), 0 failed; a render was written"
+    },
+    {
+      "at": "2026-11-18T04:19:27.382Z",
+      "ok": true,
+      "summary": "installed; session exit 0; 0 adapter tool(s) offered; 1 scripted call(s), 0 failed; a render was written"
+    },
+    {
+      "at": "2026-11-18T04:22:46.645Z",
+      "ok": true,
+      "summary": "installed; session exit 0; 0 adapter tool(s) offered; 0 scripted call(s), 0 failed; a render was written"
+    },
+    {
+      "at": "2026-11-18T04:26:38.699Z",
+      "ok": true,
+      "summary": "installed; session exit 0; 0 adapter tool(s) offered; 0 scripted call(s), 0 failed; a render was written"
+    },
+    {
+      "at": "2026-11-18T04:49:25.614Z",
+      "ok": true,
+      "summary": "installed; session exit 0; 0 adapter tool(s) offered; 0 scripted call(s), 0 failed; a render was written"
+    }
+  ],
+  "publication": {
+    "preparedAt": "2026-11-18T04:50:55.343Z",
+    "consent": "pending"
+  },
+  "publishedAt": "2026-11-18T04:52:13.150Z"
+}

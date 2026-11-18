@@ -1,0 +1,53 @@
+{
+  "name": "@kirkchinese/dsh-adapter-claude-hud-statusline",
+  "version": "0.1.0",
+  "description": "claude-hud status line for DSH",
+  "type": "module",
+  "main": "./index.js",
+  "exports": {
+    ".": "./index.js",
+    "./client": "./client.js",
+    "./plugin-root": "./plugin-root.js",
+    "./cordis.patch.yml": "./cordis.patch.yml",
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "index.js",
+    "client.js",
+    "plugin-root.js",
+    "cordis.patch.yml",
+    "README.md"
+  ],
+  "scripts": {
+    "test": "node --test"
+  },
+  "license": "MIT",
+  "keywords": [
+    "dsh-plugin",
+    "claude-hud",
+    "statusline",
+    "harness-forge-adapter"
+  ],
+  "engines": {
+    "node": ">=22.18",
+    "dsh": ">=0.2.1-rc.2 <0.3.0"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/kirkchinese/harness-forge-adapters",
+    "directory": "adapters/claude-hud-statusline"
+  },
+  "homepage": "https://github.com/kirkchinese/harness-forge-adapters/tree/main/adapters/claude-hud-statusline",
+  "dsh": {
+    "manifestVersion": 1,
+    "bundle": {
+      "patch": "./cordis.patch.yml"
+    },
+    "client": {
+      "platform": "web"
+    }
+  }
+}
