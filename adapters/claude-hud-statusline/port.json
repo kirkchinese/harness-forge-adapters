@@ -234,7 +234,21 @@
   ],
   "publication": {
     "preparedAt": "2026-11-18T04:50:55.343Z",
-    "consent": "pending"
-  },
-  "publishedAt": "2026-11-18T04:52:13.150Z"
+    "consent": {
+      "at": "2026-11-18T01:53:20Z",
+      "by": "kirkchinese (sponsor)",
+      "words": "开源之前做一次核对，防止开门暴死。先做私有仓库，等检查合格后再开放。",
+      "scope": "kirkchinese/harness-forge-adapters, private until the pre-publication checks passed, then public; npm @kirkchinese/dsh-adapter-claude-hud-statusline",
+      "recordedAt": "2026-11-18T13:20:44.324Z",
+      "note": "Recorded afterwards from the conversation in which it was given (no later than the time above, before the private repository was created). Publication followed the condition: two independent reviews and a release check (READY TO MAKE PUBLIC) before the repository was made public and the package published."
+    },
+    "published": {
+      "at": "2026-11-18T05:03:17.874Z",
+      "where": [
+        "github.com/kirkchinese/harness-forge-adapters (public) at 0b02c18, after the release check",
+        "@kirkchinese/dsh-adapter-claude-hud-statusline@0.1.0 (npm, 2026-11-18T05:03:17Z)",
+        "github.com/kirkchinese/harness-forge-adapters at 70028ed: 0.1.1 (harnessForge.ports), not on npm"
+      ]
+    }
+  }
 }
