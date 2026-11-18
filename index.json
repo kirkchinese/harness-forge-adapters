@@ -49,11 +49,11 @@
       "versions": [
         {
           "version": "0.1.1",
-          "publishTimestamp": 1794977533,
+          "publishTimestamp": 1794960508,
           "source": {
             "type": "git",
             "url": "https://github.com/kirkchinese/harness-forge-adapters",
-            "commit": "70028ed7470fffcc59ec966be41eaf98d8b8bc42",
+            "commit": "deaa7d15f2f0172739df8f19730066148bb87b3e",
             "path": "adapters/claude-hud-statusline"
           },
           "engines": {
