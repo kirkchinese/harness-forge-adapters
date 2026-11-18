@@ -53,7 +53,7 @@
           "source": {
             "type": "git",
             "url": "https://github.com/kirkchinese/harness-forge-adapters",
-            "commit": "0b02c18b5fefdde004b7b02a2849cca2c2f30ef1",
+            "commit": "5dcc911bf329755d4abf99f11249382e6fbfe8c9",
             "path": "adapters/claude-hud-statusline"
           },
           "engines": {
