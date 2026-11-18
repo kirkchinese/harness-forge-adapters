@@ -4,9 +4,9 @@ A DSH adapter that restores **claude-hud**'s status line in DSH. It runs beside 
 already installed on this machine and reuses that install's own `hud.mjs`; the plugin is not copied,
 modified or bundled.
 
-![Light theme](../../docs/claude-hud-statusline-light.png)
+![Light theme](https://raw.githubusercontent.com/kirkchinese/harness-forge-adapters/main/docs/claude-hud-statusline-light.png)
 
-![Dark theme](../../docs/claude-hud-statusline-dark.png)
+![Dark theme](https://raw.githubusercontent.com/kirkchinese/harness-forge-adapters/main/docs/claude-hud-statusline-dark.png)
 
 ## What it restores
 
@@ -24,16 +24,22 @@ spans and lays the lines out; it does not recompute the HUD's content.
 
 ## Install
 
-The adapter is not on npm yet. Install it from the community repository, at the commit its README
-gives (`<commit>` below), or from the plugin market index:
+From npm:
+
+```sh
+dsh plugin --profile web add @kirkchinese/dsh-adapter-claude-hud-statusline
+```
+
+or from the [community repository](https://github.com/kirkchinese/harness-forge-adapters), at the
+commit its README and its plugin market index (`index.json`) list:
 
 ```sh
 dsh plugin --profile web add "git+https://github.com/kirkchinese/harness-forge-adapters.git#<commit>&path:/adapters/claude-hud-statusline"
 ```
 
-Replace `web` with the DSH profile you use, and `<commit>` with the commit listed in the repository's
-README. Once the adapter is published there, a DSH profile with the plugin market enabled can also
-install it from the market index.
+Replace `web` with the DSH profile you use. A DSH profile with the plugin market can also add the
+repository's index, `https://raw.githubusercontent.com/kirkchinese/harness-forge-adapters/main/index.json`,
+and install it from there.
 
 claude-hud itself is not bundled. The adapter looks for it on this machine, on every render, in this
 order (`plugin-root.js`):

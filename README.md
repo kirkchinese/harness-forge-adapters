@@ -16,19 +16,23 @@ An adapter does not copy the original plugin. It runs beside the original, which
 
 ## Install
 
-Add this repository's market index in DSH's plugin market:
+From npm (here into the `web` profile):
+
+```sh
+dsh plugin --profile web add @kirkchinese/dsh-adapter-claude-hud-statusline
+```
+
+or add this repository's market index in DSH's plugin market:
 
 ```
 https://raw.githubusercontent.com/kirkchinese/harness-forge-adapters/main/index.json
 ```
 
-or install one adapter from the command line (here into the `web` profile):
+or install from this repository at the commit `index.json` lists:
 
 ```sh
 dsh plugin --profile web add "git+https://github.com/kirkchinese/harness-forge-adapters.git#0b02c18b5fefdde004b7b02a2849cca2c2f30ef1&path:/adapters/claude-hud-statusline"
 ```
-
-The commit is the one `index.json` lists for the adapter. The adapters are not on npm yet.
 
 ## What each adapter directory holds
 
@@ -69,19 +73,23 @@ DSH 适配器：当 DSH 无法原样运行 Claude Code、Codex 或 OpenCode 插�
 
 ## 安装
 
-在 DSH 插件市场中添加本仓库的索引：
+从 npm 安装（此处装进 `web` profile）：
+
+```sh
+dsh plugin --profile web add @kirkchinese/dsh-adapter-claude-hud-statusline
+```
+
+或者在 DSH 插件市场中添加本仓库的索引：
 
 ```
 https://raw.githubusercontent.com/kirkchinese/harness-forge-adapters/main/index.json
 ```
 
-或者用命令行安装单个适配器（此处装进 `web` profile）：
+或者从本仓库按 `index.json` 列出的 commit 安装：
 
 ```sh
 dsh plugin --profile web add "git+https://github.com/kirkchinese/harness-forge-adapters.git#0b02c18b5fefdde004b7b02a2849cca2c2f30ef1&path:/adapters/claude-hud-statusline"
 ```
-
-其中的 commit 就是 `index.json` 为该适配器列出的那一个。适配器暂未发布到 npm。
 
 ## 每个适配器目录里有什么
 
