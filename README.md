@@ -25,10 +25,10 @@ https://raw.githubusercontent.com/kirkchinese/harness-forge-adapters/main/index.
 or install one adapter from the command line (here into the `web` profile):
 
 ```sh
-dsh plugin --profile web add "git+https://github.com/kirkchinese/harness-forge-adapters.git#<commit>&path:/adapters/claude-hud-statusline"
+dsh plugin --profile web add "git+https://github.com/kirkchinese/harness-forge-adapters.git#0b02c18b5fefdde004b7b02a2849cca2c2f30ef1&path:/adapters/claude-hud-statusline"
 ```
 
-`<commit>` is the commit `index.json` lists for the adapter. The adapters are not on npm yet.
+The commit is the one `index.json` lists for the adapter. The adapters are not on npm yet.
 
 ## What each adapter directory holds
 
@@ -78,10 +78,10 @@ https://raw.githubusercontent.com/kirkchinese/harness-forge-adapters/main/index.
 或者用命令行安装单个适配器（此处装进 `web` profile）：
 
 ```sh
-dsh plugin --profile web add "git+https://github.com/kirkchinese/harness-forge-adapters.git#<commit>&path:/adapters/claude-hud-statusline"
+dsh plugin --profile web add "git+https://github.com/kirkchinese/harness-forge-adapters.git#0b02c18b5fefdde004b7b02a2849cca2c2f30ef1&path:/adapters/claude-hud-statusline"
 ```
 
-`<commit>` 是 `index.json` 为该适配器列出的 commit。适配器暂未发布到 npm。
+其中的 commit 就是 `index.json` 为该适配器列出的那一个。适配器暂未发布到 npm。
 
 ## 每个适配器目录里有什么
 
