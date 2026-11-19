@@ -1,6 +1,6 @@
 /**
  * Disposal must kill a render's child, not just forget map entries: a model-switch render, a
- * turn-boundary render and a route render all outlive the agent or the plugin unless the adapter
+ * turn-boundary render and a dock read's render all outlive the agent or the plugin unless the adapter
  * aborts them. Each test starts a render whose hud.mjs writes its pid and then hangs, disposes the
  * agent or the plugin, and checks that the process is really gone (its 20 s render timeout aside).
  */
@@ -10,7 +10,7 @@ import { mkdtempSync } from 'node:fs'
 import { tmpdir } from 'node:os'
 import { join } from 'node:path'
 import {
-  ROUTE, isAlive, makeAgent, makeCtx, makeHangingHud, readPid, waitFor, withEnv,
+  isAlive, makeAgent, makeCtx, makeHangingHud, readPid, waitFor, withEnv,
 } from './helpers/harness.js'
 import { apply } from '../index.js'
 
@@ -81,10 +81,9 @@ test('disposing the agent kills a turn-boundary render that is still running', a
   await assertKilled(pid, startedAt)
 })
 
-test('disposing the agent kills a route render that is still running', async (t) => {
+test('disposing the agent kills a dock read\'s render that is still running', async (t) => {
   const { hud, agent, agents, h } = setup(t)
-  const response = { writeHead() {}, end() {} }
-  const rendering = h.route().handler({ url: `${ROUTE}?session=${agent.id}&cols=100` }, response)
+  const rendering = h.read(agent.id, 100)
   const pid = await startedPid(hud)
   const startedAt = Date.now()
   agents.delete(agent.id)
@@ -93,10 +92,9 @@ test('disposing the agent kills a route render that is still running', async (t)
   await assertKilled(pid, startedAt)
 })
 
-test('disposing the plugin kills a route render that is still running', async (t) => {
+test('disposing the plugin kills a dock read\'s render that is still running', async (t) => {
   const { hud, agent, h } = setup(t)
-  const response = { writeHead() {}, end() {} }
-  const rendering = h.route().handler({ url: `${ROUTE}?session=${agent.id}&cols=100` }, response)
+  const rendering = h.read(agent.id, 100)
   const pid = await startedPid(hud)
   const startedAt = Date.now()
   h.dispose()

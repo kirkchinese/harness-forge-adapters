@@ -63,6 +63,7 @@ one holding hud.mjs).`
 ### Requirements
 
 - DSH `0.2.1-rc.2` up to (not including) `0.3.0`.
+- Harness Forge (`@kirkchinese/dsh-harness-compat`) 0.2.0 or later in the same profile: the dock reads the line through its `harnessCompat` Remote namespace, DSH's own Remote carrier. The adapter serves no HTTP route of its own. Without Harness Forge the dock stays empty.
 - Node 22.18 or later for claude-hud.
 
 DSH Desktop runs plugins under Electron, where `process.execPath` is the Electron binary. claude-hud
@@ -147,8 +148,8 @@ diagnostic: a real `DEEPSEEK_API_KEY` (or any other key) leaves it off. In every
   (blink, strike-through, overline) and every non-SGR escape sequence are dropped; claude-hud's own
   terminal filter already removes the latter.
 - **Redraw timing.** Claude Code redraws after every message. In DSH the line is drawn at the end of
-  a turn and on a model switch, at once. In between, the browser asks the route for the line every
-  2 s, and a poll renders only when the session has no cached line yet, when the dock's width
+  a turn and on a model switch, at once. In between, the browser reads the line (Harness Forge's
+  `adapterRead`) every 2 s, and a poll renders only when the session has no cached line yet, when the dock's width
   changed, or when the cached render is at least 5 s old and the session recorded an event that
   changes the line since that render. A render that notices newer session events while it runs does
   not render again at once: it stops and leaves those facts to the next poll, so while a turn keeps

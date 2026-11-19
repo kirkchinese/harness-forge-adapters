@@ -1,7 +1,8 @@
 /**
  * claude-hud's status line, drawn below the DSH composer.
  *
- * The server half runs the plugin's own `hud.mjs` and serves the lines it printed; this half maps
+ * The server half runs the plugin's own `hud.mjs` and publishes the lines it printed, which this half
+ * reads through Harness Forge's harnessCompat Remote namespace (DSH's own Remote carrier); it maps
  * claude-hud's ANSI styling to spans and lays them out in 'conversation.composer.dock'. Only SGR
  * colour survives the trip (claude-hud's own terminal filter drops OSC 8 links and every other
  * escape sequence), so each line is drawn as styled spans. The dock measures its own width and asks
@@ -12,7 +13,7 @@ window.__ModuleLoader__.load({ id: "@kirkchinese/dsh-adapter-claude-hud-statusli
   var exports = module.exports
   const React = require('react')
   const h = React.createElement
-  const ROUTE = '/plugins/claude-hud-statusline/surface'
+  let clientCtx
 
   // GitHub's tested terminal palettes. `muted` is a real colour (the DSH tertiary label when the
   // host defines it), never reduced opacity over an already-secondary label.
@@ -150,9 +151,9 @@ window.__ModuleLoader__.load({ id: "@kirkchinese/dsh-adapter-claude-hud-statusli
   /**
    * Coordinates one session's polling: clears the previous lines, never lets two polls overlap, and
    * ignores responses from an older request, an older session, or after disposal. Returns a disposer
-   * that aborts the in-flight fetch and stops the interval.
+   * that stops the interval; a read still in flight is ignored when it answers.
    */
-  function makeSessionTracker({ sessionId, columns, onLines, fetcher = defaultFetcher, intervalMs = 2000 }) {
+  function makeSessionTracker({ sessionId, columns, onLines, reader = defaultReader, intervalMs = 2000 }) {
     let disposed = false
     let controller = null
     let inFlight = false
@@ -166,9 +167,9 @@ window.__ModuleLoader__.load({ id: "@kirkchinese/dsh-adapter-claude-hud-statusli
       const myId = ++requestId
       controller = new AbortController()
       try {
-        const data = await fetcher(`${ROUTE}?session=${encodeURIComponent(sessionId)}&cols=${columns()}`, controller.signal)
+        const data = await reader({ session: sessionId, cols: columns() }, controller.signal)
         if (disposed || myId !== requestId) return
-        // The route can answer a request that started before a switch; never draw another session.
+        // A read can answer a request that started before a switch; never draw another session.
         if (data?.sessionId !== undefined && data.sessionId !== sessionId) return
         onLines(Array.isArray(data?.lines) ? data.lines : [], sessionId)
       } catch {
@@ -188,10 +189,16 @@ window.__ModuleLoader__.load({ id: "@kirkchinese/dsh-adapter-claude-hud-statusli
     }
   }
 
-  async function defaultFetcher(url, signal) {
-    const response = await fetch(url, { signal })
-    if (!response.ok) throw new Error(`status ${response.status}`)
-    return response.json()
+  /** One read of the line through Harness Forge's namespace, once its browser half has mounted it. */
+  async function defaultReader(request) {
+    const namespace = clientCtx?.get?.('remote.harnessCompat') ?? clientCtx?.root?.get?.('remote.harnessCompat')
+    if (namespace === undefined || typeof namespace.adapterRead !== 'function') throw new Error('Harness Forge is not mounted yet')
+    const result = await namespace.adapterRead({ adapter: 'claude-hud-statusline', ...request })
+    if (result !== null && typeof result === 'object' && 'ok' in result) {
+      if (!result.ok) throw new Error(result.error?.message ?? 'adapterRead failed')
+      return result.value
+    }
+    return result
   }
 
   function Surface({ sessionId }) {
@@ -294,6 +301,7 @@ window.__ModuleLoader__.load({ id: "@kirkchinese/dsh-adapter-claude-hud-statusli
   exports.makeSessionTracker = makeSessionTracker
   exports.inject = ['slots']
   exports.apply = function apply(ctx) {
+    clientCtx = ctx
     if (typeof ctx.effect === 'function') ctx.effect(() => installStyles(), 'claude-hud-statusline: layout style')
     ctx.slots.inject('conversation.composer.dock', () => ctx.slots.register({ name: 'conversation.composer.dock', id: "claude-hud-statusline", order: 50 }, Surface))
   }

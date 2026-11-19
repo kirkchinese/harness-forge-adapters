@@ -9,7 +9,7 @@ test('clears lines immediately, never overlaps, and ignores responses after disp
   const seen = []
   let fetches = 0
   const inFlight = []
-  const fetcher = (url, signal) => {
+  const reader = (request, signal) => {
     fetches += 1
     return new Promise((resolve, reject) => { inFlight.push({ resolve, reject, signal }) })
   }
@@ -17,7 +17,7 @@ test('clears lines immediately, never overlaps, and ignores responses after disp
     sessionId: 's1',
     columns: () => 120,
     onLines: (lines) => seen.push(lines),
-    fetcher,
+    reader,
     intervalMs: 10,
   })
 
@@ -38,10 +38,10 @@ test('a new tracker for a new session is independent', async () => {
   const seenB = []
   const pendingA = []
   const pendingB = []
-  const fetcher = (pending) => (url, signal) => new Promise((resolve, reject) => { pending.push({ resolve, reject, signal }) })
+  const reader = (pending) => (request, signal) => new Promise((resolve, reject) => { pending.push({ resolve, reject, signal }) })
 
-  const disposeA = makeSessionTracker({ sessionId: 'a', columns: () => 120, onLines: (l) => seenA.push(l), fetcher: fetcher(pendingA), intervalMs: 100_000 })
-  const disposeB = makeSessionTracker({ sessionId: 'b', columns: () => 120, onLines: (l) => seenB.push(l), fetcher: fetcher(pendingB), intervalMs: 100_000 })
+  const disposeA = makeSessionTracker({ sessionId: 'a', columns: () => 120, onLines: (l) => seenA.push(l), reader: reader(pendingA), intervalMs: 100_000 })
+  const disposeB = makeSessionTracker({ sessionId: 'b', columns: () => 120, onLines: (l) => seenB.push(l), reader: reader(pendingB), intervalMs: 100_000 })
 
   assert.deepEqual(seenA, [[]])
   assert.deepEqual(seenB, [[]])
@@ -63,7 +63,7 @@ test('a response naming another session is ignored even on the same tracker', as
     sessionId: 'mine',
     columns: () => 120,
     onLines: (lines) => seen.push(lines),
-    fetcher: () => new Promise((resolve) => { resolveFetch = resolve }),
+    reader: () => new Promise((resolve) => { resolveFetch = resolve }),
     intervalMs: 100_000,
   })
   resolveFetch({ sessionId: 'other', lines: ['not mine'] })

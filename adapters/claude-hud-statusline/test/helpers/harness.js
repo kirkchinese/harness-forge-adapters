@@ -7,8 +7,6 @@ import { mkdtempSync, readFileSync, writeFileSync } from 'node:fs'
 import { tmpdir } from 'node:os'
 import { join } from 'node:path'
 
-export const ROUTE = '/plugins/claude-hud-statusline/surface'
-
 export const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms))
 
 /** A live agent with DSH's session shape: header, seq, eventAt(), optional requestContext(). */
@@ -32,13 +30,13 @@ export function appendEvent(agent, event) {
 
 /**
  * The fake ctx: `on` records handlers, `effect` keeps disposers (run last-in-first-out by
- * dispose()), `inject(['webServer'], …)` runs its callback with a scoped ctx whose webServer records
- * the route. `agents` is a Map standing in for DSH's agent registry.
+ * dispose()), `inject(['webServer'], …)` marks a window, `inject(['harnessCompat'], …)` records the
+ * surface the adapter publishes. `agents` is a Map standing in for DSH's agent registry.
  */
 export function makeCtx(agents) {
   const handlers = new Map()
   const disposers = []
-  const routes = []
+  const surfaces = []
   const logger = { warn() {}, info() {}, debug() {} }
   const ctx = {
     logger,
@@ -58,22 +56,23 @@ export function makeCtx(agents) {
       return () => {}
     },
     inject(names, callback) {
-      if (!Array.isArray(names) || !names.includes('webServer')) return
-      const webServer = {
-        register(spec) {
-          routes.push(spec)
-          return () => {
-            const index = routes.indexOf(spec)
-            if (index >= 0) routes.splice(index, 1)
+      if (!Array.isArray(names)) return
+      const harnessCompat = {
+        registerAdapterSurface(id, source) {
+          const entry = { id, source }
+          surfaces.push(entry)
+          return {
+            changed() {},
+            dispose() {
+              const index = surfaces.indexOf(entry)
+              if (index >= 0) surfaces.splice(index, 1)
+            },
           }
         },
       }
-      const scoped = {
-        get: (name) => (name === 'webServer' ? webServer : undefined),
-        effect: ctx.effect,
-        logger,
-      }
-      callback(scoped)
+      const services = { webServer: {}, harnessCompat }
+      if (!names.every((name) => name in services)) return
+      callback({ get: (name) => services[name], effect: ctx.effect, logger })
     },
   }
   return {
@@ -85,8 +84,9 @@ export function makeCtx(agents) {
     run(event, ...args) {
       return (handlers.get(event) ?? []).map((handler) => handler(...args))
     },
-    route() {
-      return routes[0]
+    /** One dock read of the published surface, as the browser half makes it. */
+    read(session, cols) {
+      return surfaces[0].source.read(session, { adapter: surfaces[0].id, session, cols })
     },
     dispose() {
       while (disposers.length > 0) disposers.pop()()

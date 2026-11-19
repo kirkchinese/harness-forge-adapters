@@ -9,9 +9,10 @@
  *                      ←  its stdout, ANSI colour and all              ←
  *
  * so claude-hud computes the lines and their ANSI styling. The adapter maps that styling to the
- * browser (client.js) and lays the lines out below the composer:
+ * browser (client.js) and lays the lines out below the composer. The dock reads them through Harness
+ * Forge's harnessCompat Remote namespace, which needs Harness Forge 0.2.0 or later:
  *
- *   GET /plugins/claude-hud-statusline/surface?session=<id>&cols=<n>  →  { lines: string[], at: number }
+ *   registerAdapterSurface('claude-hud-statusline', { read(session, { cols }) → { lines: string[], at: number } })
  *
  * A render only happens where a DSH window (webServer) exists, or when the opt-in diagnostic is on
  * (or the port trial harness runs the session); headless DSH renders nothing by default. The
@@ -26,7 +27,6 @@ import { locatePlugin } from './plugin-root.js'
 
 export const name = 'claude-hud-statusline'
 
-const ROUTE = '/plugins/claude-hud-statusline/surface'
 // What the dock shows when this machine has no claude-hud to run: one line, naming both ways out.
 export const NOT_FOUND_LINE = 'claude-hud: not installed. Install it for Claude Code, or set CLAUDE_HUD_ROOT to its folder (the one holding hud.mjs).'
 // The dock has a little padding, and a desktop window is about this wide.
@@ -391,7 +391,7 @@ export function apply(ctx) {
    * Abort and forget one session: its agent's controller (which kills any render's child it still
    * has running), its in-flight render's own controller, and its cached and pending entries. Every
    * render is linked to the session controller in `refresh`, so this cancels renders that were
-   * started from a model switch or the route with no signal of their own.
+   * started from a model switch or a dock read with no signal of their own.
    */
   function forgetSession(sessionId) {
     if (sessionId === undefined) return
@@ -659,27 +659,30 @@ export function apply(ctx) {
     pruneGoneAgents()
   })
 
-  // The route exists where DSH serves a window (Web, Desktop); headless runs render only for the
+  // Renders run where DSH serves a window (Web, Desktop); headless runs render only for the
   // diagnostic, and keep last-render.json in that case.
   ctx.inject(['webServer'], (scoped) => {
     scoped.effect(() => {
       hasWindow = true
-      const off = scoped.get('webServer').register({
-        kind: 'exact',
-        path: ROUTE,
-        handler: async (request, response) => {
-          const url = new URL(request.url ?? '/', 'http://local')
-          const sessionId = url.searchParams.get('session') ?? ''
-          const columns = columnsOf(url.searchParams.get('cols'))
+      return () => { hasWindow = false }
+    }, 'claude-hud-statusline: window')
+  })
+
+  // The dock reads the line through Harness Forge's harnessCompat Remote namespace (DSH's own Remote
+  // carrier): one read per poll, for the dock's width. The adapter serves no HTTP route of its own.
+  ctx.inject(['harnessCompat'], (scoped) => {
+    scoped.effect(() => {
+      const published = scoped.get('harnessCompat').registerAdapterSurface('claude-hud-statusline', {
+        read: async (sessionId, request) => {
+          const columns = columnsOf(request?.cols === undefined || request?.cols === null ? null : String(request.cols))
           pruneGoneAgents()
           const cached = latest.get(sessionId)
           if (needsRender(sessionId, columns, cached)) await refresh(sessionId, columns, { signal: lifetime.signal }).catch(() => undefined)
-          response.writeHead(200, { 'content-type': 'application/json; charset=utf-8', 'cache-control': 'no-store' })
-          response.end(JSON.stringify(latest.get(sessionId) ?? { lines: [], at: 0, sessionId }))
+          return latest.get(sessionId) ?? { lines: [], at: 0, sessionId }
         },
       })
-      return () => { hasWindow = false; off() }
-    }, 'claude-hud-statusline: route')
+      return () => published.dispose()
+    }, 'claude-hud-statusline: surface')
   })
 
   // Cancel outstanding renders when the plugin is disposed: every render is linked to the lifetime

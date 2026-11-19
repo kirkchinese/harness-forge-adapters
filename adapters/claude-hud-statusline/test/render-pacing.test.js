@@ -9,7 +9,7 @@ import { mkdtempSync } from 'node:fs'
 import { tmpdir } from 'node:os'
 import { join } from 'node:path'
 import {
-  ROUTE, appendEvent, delay, freezeClock, makeAgent, makeCtx, makeCountingHud, spawnCount, withEnv,
+  appendEvent, delay, freezeClock, makeAgent, makeCtx, makeCountingHud, spawnCount, withEnv,
 } from './helpers/harness.js'
 import { apply } from '../index.js'
 
@@ -31,11 +31,9 @@ function setup(t, { delayMs }) {
   return { hud, agent, h, clock }
 }
 
-const response = () => ({ writeHead() {}, end() {} })
-
 /** One dock poll for the session at the given width. */
 function poll(h, agent, cols = 100) {
-  return h.route().handler({ url: `${ROUTE}?session=${agent.id}&cols=${cols}` }, response())
+  return h.read(agent.id, cols)
 }
 
 test('a render that sees newer session events does not follow up inside the 5 s ceiling', async (t) => {
