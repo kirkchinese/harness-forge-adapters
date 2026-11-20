@@ -673,7 +673,7 @@ export function apply(ctx) {
   ctx.inject(['harnessCompat'], (scoped) => {
     const harnessCompat = scoped.get('harnessCompat')
     if (typeof harnessCompat?.registerAdapterSurface !== 'function') {
-      ctx.logger?.('claude-hud-statusline')?.warn?.('Harness Forge in this profile is older than 0.2.0 (no registerAdapterSurface); the status line needs @kirkchinese/dsh-harness-compat 0.2.0 or later')
+      ctx.logger?.warn?.('claude-hud-statusline: Harness Forge in this profile is older than 0.2.0 (no registerAdapterSurface); the status line needs @kirkchinese/dsh-harness-compat 0.2.0 or later')
       return
     }
     scoped.effect(() => {

@@ -33,11 +33,12 @@ export function appendEvent(agent, event) {
  * dispose()), `inject(['webServer'], …)` marks a window, `inject(['harnessCompat'], …)` records the
  * surface the adapter publishes. `agents` is a Map standing in for DSH's agent registry.
  */
-export function makeCtx(agents) {
+export function makeCtx(agents, { harnessCompat: compat } = {}) {
   const handlers = new Map()
   const disposers = []
   const surfaces = []
-  const logger = { warn() {}, info() {}, debug() {} }
+  const warnings = []
+  const logger = { warn(message) { warnings.push(String(message)) }, info() {}, debug() {} }
   const ctx = {
     logger,
     get(name) {
@@ -70,7 +71,7 @@ export function makeCtx(agents) {
           }
         },
       }
-      const services = { webServer: {}, harnessCompat }
+      const services = { webServer: {}, harnessCompat: compat ?? harnessCompat }
       if (!names.every((name) => name in services)) return
       callback({ get: (name) => services[name], effect: ctx.effect, logger })
     },
@@ -78,6 +79,8 @@ export function makeCtx(agents) {
   return {
     ctx,
     handlers,
+    warnings,
+    surfaces,
     emit(event, ...args) {
       for (const handler of handlers.get(event) ?? []) handler(...args)
     },

@@ -148,14 +148,14 @@ window.__ModuleLoader__.load({ id: "@kirkchinese/dsh-adapter-claude-hud-statusli
     return () => { if (typeof tag.remove === 'function') tag.remove() }
   }
 
+  /** Failed reads in a row after which the dock shows the reason. */
+  const UNREADABLE_AFTER = 3
+
   /**
    * Coordinates one session's polling: clears the previous lines, never lets two polls overlap, and
    * ignores responses from an older request, an older session, or after disposal. Returns a disposer
    * that stops the interval; a read still in flight is ignored when it answers.
    */
-  /** Failed reads in a row after which the dock shows the reason. */
-  const UNREADABLE_AFTER = 3
-
   function makeSessionTracker({ sessionId, columns, onLines, reader = defaultReader, intervalMs = 2000 }) {
     let disposed = false
     let controller = null
