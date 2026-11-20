@@ -671,8 +671,13 @@ export function apply(ctx) {
   // The dock reads the line through Harness Forge's harnessCompat Remote namespace (DSH's own Remote
   // carrier): one read per poll, for the dock's width. The adapter serves no HTTP route of its own.
   ctx.inject(['harnessCompat'], (scoped) => {
+    const harnessCompat = scoped.get('harnessCompat')
+    if (typeof harnessCompat?.registerAdapterSurface !== 'function') {
+      ctx.logger?.('claude-hud-statusline')?.warn?.('Harness Forge in this profile is older than 0.2.0 (no registerAdapterSurface); the status line needs @kirkchinese/dsh-harness-compat 0.2.0 or later')
+      return
+    }
     scoped.effect(() => {
-      const published = scoped.get('harnessCompat').registerAdapterSurface('claude-hud-statusline', {
+      const published = harnessCompat.registerAdapterSurface('claude-hud-statusline', {
         read: async (sessionId, request) => {
           const columns = columnsOf(request?.cols === undefined || request?.cols === null ? null : String(request.cols))
           pruneGoneAgents()

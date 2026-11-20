@@ -57,5 +57,13 @@
     "client": {
       "platform": "web"
     }
+  },
+  "peerDependencies": {
+    "@kirkchinese/dsh-harness-compat": ">=0.2.0"
+  },
+  "peerDependenciesMeta": {
+    "@kirkchinese/dsh-harness-compat": {
+      "optional": false
+    }
   }
 }

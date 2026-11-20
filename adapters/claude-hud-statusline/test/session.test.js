@@ -71,3 +71,19 @@ test('a response naming another session is ignored even on the same tracker', as
   assert.deepEqual(seen, [[]], 'the mismatched response never reaches the dock')
   dispose()
 })
+
+test('a read that keeps failing says why in the dock instead of staying blank', async () => {
+  const seen = []
+  const dispose = makeSessionTracker({
+    sessionId: 's1',
+    columns: () => 120,
+    onLines: (lines) => seen.push(lines),
+    reader: async () => { throw new Error('unknown method adapterRead') },
+    intervalMs: 5,
+  })
+  await delay(80)
+  dispose()
+  const shown = seen.find(lines => lines.length > 0)
+  assert.ok(shown !== undefined, 'a reason is shown')
+  assert.match(shown[0], /needs @kirkchinese\/dsh-harness-compat 0\.2\.0 or later\): unknown method adapterRead/)
+})

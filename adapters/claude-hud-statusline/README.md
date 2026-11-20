@@ -63,7 +63,7 @@ one holding hud.mjs).`
 ### Requirements
 
 - DSH `0.2.1-rc.2` up to (not including) `0.3.0`.
-- Harness Forge (`@kirkchinese/dsh-harness-compat`) 0.2.0 or later in the same profile: the dock reads the line through its `harnessCompat` Remote namespace, DSH's own Remote carrier. The adapter serves no HTTP route of its own. Without Harness Forge the dock stays empty.
+- Harness Forge (`@kirkchinese/dsh-harness-compat`) 0.2.0 or later in the same profile: the dock reads the line through its `harnessCompat` Remote namespace, DSH's own Remote carrier. The adapter serves no HTTP route of its own. It is declared as a peer dependency, so the plugin manager warns when it is missing. With an older Harness Forge, or none, the dock shows after a few seconds one line saying it cannot read the status line and why, and the DSH log names the version it needs.
 - Node 22.18 or later for claude-hud.
 
 DSH Desktop runs plugins under Electron, where `process.execPath` is the Electron binary. claude-hud

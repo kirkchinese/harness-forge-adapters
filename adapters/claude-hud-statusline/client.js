@@ -153,11 +153,16 @@ window.__ModuleLoader__.load({ id: "@kirkchinese/dsh-adapter-claude-hud-statusli
    * ignores responses from an older request, an older session, or after disposal. Returns a disposer
    * that stops the interval; a read still in flight is ignored when it answers.
    */
+  /** Failed reads in a row after which the dock shows the reason. */
+  const UNREADABLE_AFTER = 3
+
   function makeSessionTracker({ sessionId, columns, onLines, reader = defaultReader, intervalMs = 2000 }) {
     let disposed = false
     let controller = null
     let inFlight = false
     let requestId = 0
+    // Reads that failed in a row: past a few, the dock says why instead of staying blank.
+    let failures = 0
 
     onLines([], sessionId) // clear immediately (also on session switch)
 
@@ -171,9 +176,13 @@ window.__ModuleLoader__.load({ id: "@kirkchinese/dsh-adapter-claude-hud-statusli
         if (disposed || myId !== requestId) return
         // A read can answer a request that started before a switch; never draw another session.
         if (data?.sessionId !== undefined && data.sessionId !== sessionId) return
+        failures = 0
         onLines(Array.isArray(data?.lines) ? data.lines : [], sessionId)
-      } catch {
-        // Aborted, or the next tick tries again.
+      } catch (error) {
+        // Aborted, or the next tick tries again; a read that keeps failing is shown, with what the host said.
+        if (disposed || myId !== requestId) return
+        failures += 1
+        if (failures === UNREADABLE_AFTER) onLines([`claude-hud: the dock cannot read the line from Harness Forge (it needs @kirkchinese/dsh-harness-compat 0.2.0 or later): ${error instanceof Error ? error.message : String(error)}`], sessionId)
       } finally {
         if (myId === requestId) inFlight = false
         controller = null
