@@ -2,7 +2,7 @@
 
 [中文](#中文)
 
-DSH adapters: small plugins that bring a part of a Claude Code, Codex or OpenCode plugin to DeepSeek Harness (DSH) when DSH cannot run that part as it is. Each adapter here was written by the AI inside DSH in the porting studio of [Harness Forge](https://github.com/kirkchinese/claude2dsh), checked and tried there, and then verified in a real DSH window before it was listed.
+DSH adapters: small plugins that bring a part of a Claude Code, Codex or OpenCode plugin to DeepSeek Harness (DSH) when DSH cannot run that part as it is. Each adapter here was written by the AI inside DSH in the porting studio of [Harness Forge](https://github.com/kirkchinese/harness-forge), checked and tried there, and then verified in a real DSH window before it was listed.
 
 An adapter does not copy the original plugin. It runs beside the original, which stays where you installed it, and calls the original's own code. See [SECURITY.md](SECURITY.md) for what that means.
 
@@ -61,7 +61,7 @@ The adapters are MIT-licensed (see each directory's `LICENSE`). The original plu
 
 # 中文
 
-DSH 适配器：当 DSH 无法原样运行 Claude Code、Codex 或 OpenCode 插件的某个部分时，用一个小插件把这个部分带进 DeepSeek Harness（DSH）。这里收录的每个适配器，都由 DSH 里的 AI 在 [Harness Forge](https://github.com/kirkchinese/claude2dsh) 的移植工作室中编写，经过工作室的检查和隔离试装，并在真实 DSH 窗口中核验后才收录。
+DSH 适配器：当 DSH 无法原样运行 Claude Code、Codex 或 OpenCode 插件的某个部分时，用一个小插件把这个部分带进 DeepSeek Harness（DSH）。这里收录的每个适配器，都由 DSH 里的 AI 在 [Harness Forge](https://github.com/kirkchinese/harness-forge) 的移植工作室中编写，经过工作室的检查和隔离试装，并在真实 DSH 窗口中核验后才收录。
 
 适配器不复制原插件：原插件留在你安装它的位置，适配器在旁边运行，并调用原插件自己的代码。这意味着什么，见 [SECURITY.md](SECURITY.md)。
 
