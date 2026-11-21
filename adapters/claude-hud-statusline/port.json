@@ -249,6 +249,32 @@
         "@kirkchinese/dsh-adapter-claude-hud-statusline@0.1.0 (npm, 2026-11-18T05:03:17Z)",
         "github.com/kirkchinese/harness-forge-adapters at 70028ed: 0.1.1 (harnessForge.ports), not on npm"
       ]
-    }
-  }
+    },
+    "releases": [
+      {
+        "version": "0.2.0",
+        "change": "The dock reads the line through Harness Forge 0.2.0's harnessCompat Remote namespace (adapterRead / registerAdapterSurface) instead of its own HTTP route; an older or missing Harness Forge is named in the log and in the dock; Harness Forge >= 0.2.0 is a peer dependency.",
+        "checks": "node --test: 45 tests, 44 pass, 1 skipped on Windows; a DSH Web check of the status line drawn through adapterRead with Harness Forge 0.2.0 (13 adapterRead calls, no request to the old route).",
+        "review": {
+          "by": "claude-sonnet-5-5 (independent of the porter)",
+          "verdict": "READY TO PUBLISH",
+          "note": "First pass found ctx.logger called as a function in the older-Harness-Forge branch; fixed and tested before the verdict."
+        },
+        "consent": {
+          "by": "kirkchinese (sponsor)",
+          "words": "同意发布，token 我在聊天里发给你",
+          "scope": "npm @kirkchinese/dsh-adapter-claude-hud-statusline@0.2.0 and this repository, together with Harness Forge 0.2.0",
+          "at": "2026-11-20 (evening, Asia/Tokyo), in the conversation, before the npm token was handed over"
+        },
+        "published": {
+          "at": "2026-11-21T03:46:49Z",
+          "where": [
+            "@kirkchinese/dsh-adapter-claude-hud-statusline@0.2.0 (npm)",
+            "github.com/kirkchinese/harness-forge-adapters (index.json lists 0.2.0 at the commit recording this release)"
+          ]
+        }
+      }
+    ]
+  },
+  "publishedAt": "2026-11-21T03:46:49Z"
 }
