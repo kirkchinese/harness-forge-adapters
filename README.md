@@ -31,7 +31,7 @@ https://raw.githubusercontent.com/kirkchinese/harness-forge-adapters/main/index.
 or install from this repository at the commit `index.json` lists:
 
 ```sh
-dsh plugin --profile web add "git+https://github.com/kirkchinese/harness-forge-adapters.git#deaa7d15f2f0172739df8f19730066148bb87b3e&path:/adapters/claude-hud-statusline"
+dsh plugin --profile web add "git+https://github.com/kirkchinese/harness-forge-adapters.git#da762dbcda9a622bf2a18d408aa5961b2678c899&path:/adapters/claude-hud-statusline"
 ```
 
 ## What each adapter directory holds
@@ -88,7 +88,7 @@ https://raw.githubusercontent.com/kirkchinese/harness-forge-adapters/main/index.
 或者从本仓库按 `index.json` 列出的 commit 安装：
 
 ```sh
-dsh plugin --profile web add "git+https://github.com/kirkchinese/harness-forge-adapters.git#deaa7d15f2f0172739df8f19730066148bb87b3e&path:/adapters/claude-hud-statusline"
+dsh plugin --profile web add "git+https://github.com/kirkchinese/harness-forge-adapters.git#da762dbcda9a622bf2a18d408aa5961b2678c899&path:/adapters/claude-hud-statusline"
 ```
 
 ## 每个适配器目录里有什么
